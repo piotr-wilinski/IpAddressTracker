@@ -1,14 +1,14 @@
-'use strict'
-
 const form = document.querySelector('form')
 const input = document.querySelector('.ip-search')
+
+let mymap
 
 class IP {
   constructor(ipAddress = '') {
     this.ipAddress = ipAddress
     this.API = `https://geo.ipify.org/api/v1?apiKey=at_UZsip4JpTH2wVznbUvDZkL3KpDJRb&ipAddress=&domain=${this.ipAddress}`
 
-    this.mymap
+    // this.mymap
 
     //DOM elements
     this.ipText = document.querySelector('.ip')
@@ -43,22 +43,21 @@ class IP {
   }
 
   refreshMapLocation(data) {
-    var container = L.DomUtil.get('mapid');
-    if (container !== null) {
-      container._leaflet_id = '';
+    if (mymap != undefined) {
+      mymap.remove();
     }
 
-    var newMarker = L.icon({
+    let newMarker = L.icon({
       iconUrl: '../ip-address-tracker/images/icon-location.svg',
       iconSize: [46, 56],
       iconAnchor: [23, 56],
     })
 
-    this.mymap = L.map('mapid').setView([data.lat + 0.03, data.lng], 12);
+    mymap = L.map('mapid').setView([data.lat + 0.03, data.lng], 12);
     let tiles = L.tileLayer('http://{s}.tile.osm.org/{z}/{x}/{y}.png', {
       attribution: '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-    }).addTo(this.mymap);
-    let marker = L.marker([data.lat, data.lng], { icon: newMarker }).addTo(this.mymap)
+    }).addTo(mymap);
+    let marker = L.marker([data.lat, data.lng], { icon: newMarker }).addTo(mymap)
   }
 }
 
