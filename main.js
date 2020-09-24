@@ -4,9 +4,9 @@ const form = document.querySelector('form')
 const input = document.querySelector('.ip-search')
 
 class IP {
-  constructor(ipAddress) {
+  constructor(ipAddress = '') {
     this.ipAddress = ipAddress
-    this.API = `https://geo.ipify.org/api/v1?apiKey=at_UZsip4JpTH2wVznbUvDZkL3KpDJRb&ipAddress=${this.ipAddress}`
+    this.API = `https://geo.ipify.org/api/v1?apiKey=at_UZsip4JpTH2wVznbUvDZkL3KpDJRb&ipAddress=&domain=${this.ipAddress}`
 
     this.mymap
 
@@ -44,8 +44,8 @@ class IP {
 
   refreshMapLocation(data) {
     var container = L.DomUtil.get('mapid');
-    if (container != null) {
-      container._leaflet_id = null;
+    if (container !== null) {
+      container._leaflet_id = '';
     }
 
     var newMarker = L.icon({
@@ -62,7 +62,7 @@ class IP {
   }
 }
 
-const ipDefault = new IP('8.8.8.8')
+const ipDefault = new IP()
 ipDefault.initializeData()
 
 form.addEventListener('submit', e => {
